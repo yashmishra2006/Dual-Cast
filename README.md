@@ -37,5 +37,3 @@ Amateur Valorant matches often lack engaging commentary, making spectating or re
 3. **Game Phase**: Reacts to spike events, kills, clutches, etc.
 4. **Dual Caster Engine**: Alternates between voices for dynamic commentary.
 
-## 📦 Folder Structure
-
