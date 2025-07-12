@@ -50,14 +50,14 @@ No casters? No problem.
 
 ## 📦 Folder Structure
 dual-cast/
-├── main.py # Main orchestration script
-├── phase_classifier/ # Predicts current game phase
-├── agent_phase/ # ResNet-50-based agent detection
-├── buy_phase/ # YOLOv8 + ResNet-18 for buy detection
-├── game_phase/ # YOLOv8 + ResNet-18 for gameplay events
-├── tts_engine/ # Dual voice TTS generator
-├── commentary_templates/ # Phase-wise JSON/CSV commentary lines
-└── utils/ # Shared helpers (frame extraction, etc.)
+├── main.py                 # Main orchestration script
+├── phase_classifier/       # Predicts current game phase
+├── agent_phase/            # ResNet-50-based agent detection
+├── buy_phase/              # YOLOv8 + ResNet-18 for buy detection
+├── game_phase/             # YOLOv8 + ResNet-18 for gameplay events
+├── tts_engine/             # Dual voice TTS generator
+├── commentary_templates/   # JSON/CSV commentary lines
+└── utils/                  # Shared helpers (e.g., frame extraction)
 
 
 ## 🧠 Models Used
