@@ -48,17 +48,15 @@ No casters? No problem.
 - 🎮 **Valorant-Specific Logic**: Built entirely around Valorant game mechanics.
 - 📦 **Plug-and-Play UI (optional)**: Simple Flask or Streamlit front-end for demo/testing.
 
-## 📦 Folder Structure
-dual-cast/
-├── main.py                 # Main orchestration script
-├── phase_classifier/       # Predicts current game phase
-├── agent_phase/            # ResNet-50-based agent detection
-├── buy_phase/              # YOLOv8 + ResNet-18 for buy detection
-├── game_phase/             # YOLOv8 + ResNet-18 for gameplay events
-├── tts_engine/             # Dual voice TTS generator
-├── commentary_templates/   # JSON/CSV commentary lines
-└── utils/                  # Shared helpers (e.g., frame extraction)
-
+### 📦 Folder Structure
+- `main.py` — Central orchestrator, routes frames and commentary.
+- `phase_classifier/` — Detects current phase (Agent, Buy, Game).
+- `agent_phase/` — ResNet-50 for locked agent recognition.
+- `buy_phase/` — YOLOv8 + ResNet-18 to detect loadouts and economy.
+- `game_phase/` — YOLOv8 + ResNet-18 for spike, kills, etc.
+- `tts_engine/` — Generates voice output using dual TTS.
+- `commentary_templates/` — Phase-wise hype + analytical scripts.
+- `utils/` — Frame handling and shared helper functions.
 
 ## 🧠 Models Used
 
