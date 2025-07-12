@@ -1,6 +1,6 @@
 # 🎙️ Dual Cast Commentary System
 
-AI-powered real-time dual-caster commentary for Valorant matches — making every custom lobby feel like a professional esports broadcast.
+AI-powered real-time dual-caster commentary for Valorant matches — built for Code for Bharat Season 2.
 
 ## 🚀 Overview
 
@@ -11,29 +11,84 @@ The Dual Cast Commentary System brings the thrill of professional shoutcasting t
 
 No casters? No problem.
 
-## 🎯 Problem Statement
+## 🧠 Architecture & Workflow
 
-Amateur Valorant matches often lack engaging commentary, making spectating or reviewing gameplay less immersive. This project solves that by using AI to deliver live, energetic, and strategic commentary — fully automated.
+1. **🎞️ Frame Processor (Main Script)**  
+   - Processes incoming video stream.
+   - Extracts 1 frame per second and sends it to the **Phase Classifier**.
 
-## 🧠 Key Features
+2. **📊 Phase Classifier**  
+   - Classifies the current frame into one of the three phases:
+     - **Agent Selection**
+     - **Buy Phase**
+     - **Game Phase**
 
-- 🎭 **Dual TTS Voices**: One for hype, one for analysis.
-- ⏱️ **Real-Time Reactions**: Commentary triggers synced with game events.
-- 🧩 **Modular Templates**: Customizable commentary lines for various scenarios.
-- 🎮 **Valorant-Specific Logic**: Recognizes agent picks, spike events, aces, thriftys, clutches, and more.
+3. **🧠 Phase-Specific Model Pipelines**
+   - Based on the phase, frames are routed to dedicated model stacks:
+     - 🔹 **Agent Phase** → `ResNet-50`
+     - 🔹 **Buy Phase** → `YOLOv8 + ResNet-18`
+     - 🔹 **Game Phase** → `YOLOv8 + ResNet-18`
+
+4. **🔄 Back to Main Script**
+   - Outputs (agents, weapons, spike status, etc.) are returned to the main script.
+   - Triggers commentary templates and sends to TTS engine.
+
+5. **🗣️ Dual-Caster Commentary Engine**
+   - Two unique TTS voices simulate professional casters.
+   - One delivers **hype**, the other provides **analysis**.
+   - Voices alternate naturally with contextual awareness.
+
+## 💡 Key Features
+
+- 🎭 **Dual TTS Voices**: One hype, one analytical — like real shoutcasters.
+- ⏱️ **Real-Time Reactions**: Commentary matches the game flow with low latency.
+- 🧩 **Modular Templates**: Custom JSON/CSV commentary lines for all match events.
+- 🤖 **Smart Phase Detection**: Uses a custom classifier to detect game phases.
+- 🧠 **Agent & Event Recognition**: Leverages ResNet and YOLOv8 to detect agent locks, spike, clutches, aces, buys, and more.
+- 🎮 **Valorant-Specific Logic**: Built entirely around Valorant game mechanics.
+- 📦 **Plug-and-Play UI (optional)**: Simple Flask or Streamlit front-end for demo/testing.
+
+## 📦 Folder Structure
+dual-cast/
+├── main.py # Main orchestration script
+├── phase_classifier/ # Predicts current game phase
+├── agent_phase/ # ResNet-50-based agent detection
+├── buy_phase/ # YOLOv8 + ResNet-18 for buy detection
+├── game_phase/ # YOLOv8 + ResNet-18 for gameplay events
+├── tts_engine/ # Dual voice TTS generator
+├── commentary_templates/ # Phase-wise JSON/CSV commentary lines
+└── utils/ # Shared helpers (frame extraction, etc.)
+
+
+## 🧠 Models Used
+
+| Phase           | Models Used            |
+|----------------|------------------------|
+| Agent Phase     | ResNet-50              |
+| Buy Phase       | YOLOv8 + ResNet-18     |
+| Game Phase      | YOLOv8 + ResNet-18     |
+| Phase Detection | Custom Phase Classifier|
+
+## 🎯 Use Cases
+
+- 🎮 Valorant custom matches & scrims
+- 📺 Twitch/YouTube live overlays
+- 🧠 Post-match review with voice highlights
+- ✂️ Auto-highlight reels with caster voices
 
 ## 🛠️ Tech Stack
 
 - 🐍 Python
-- 🗣️ TTS (e.g. Coqui TTS / Bark / ElevenLabs-compatible)
-- 🎯 Game State Integration (via screenshot parsing or event feed)
-- ⚙️ Flask/Streamlit for UI (optional)
-- 🧠 Template system (CSV/JSON-based)
+- 🎯 PyTorch (YOLOv8, ResNet-18/50)
+- 🗣️ TTS Engine (Coqui TTS / Bark / ElevenLabs-compatible)
+- 🖼️ OpenCV
+- 🧪 Optional: Streamlit/Flask UI for testing
 
-## 🧪 How It Works
+## 🏁 Getting Started
 
-1. **Agent Selection**: Detects locked agents and generates hype/analysis commentary.
-2. **Buy Phase**: Comments on economy, buys, and loadouts.
-3. **Game Phase**: Reacts to spike events, kills, clutches, etc.
-4. **Dual Caster Engine**: Alternates between voices for dynamic commentary.
+```bash
+git clone https://github.com/your-team/dual-cast.git
+cd dual-cast
+pip install -r requirements.txt
+python main.py --video gameplay.mp4
 
